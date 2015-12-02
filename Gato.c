@@ -41,6 +41,7 @@ gint main ( gint argc, gchar *argv[])
 
   struct Elementos elementos;
   elementos.count = 0;
+  int i;
 
   /* Widgets */
 
@@ -89,7 +90,10 @@ gint main ( gint argc, gchar *argv[])
   /* Buttons Initialization */
 
   /* Tablero Gato */
-  elementos.button[0] = gtk_button_new_with_label("");
+  for ( i=0; i<9; i++ )
+    elementos.button[i] = gtk_button_new_with_label("");
+  
+  /*elementos.button[0] = gtk_button_new_with_label("");
   elementos.button[1] = gtk_button_new_with_label("");
   elementos.button[2] = gtk_button_new_with_label("");
   elementos.button[3] = gtk_button_new_with_label("");
@@ -97,7 +101,7 @@ gint main ( gint argc, gchar *argv[])
   elementos.button[5] = gtk_button_new_with_label("");
   elementos.button[6] = gtk_button_new_with_label("");
   elementos.button[7] = gtk_button_new_with_label("");
-  elementos.button[8] = gtk_button_new_with_label("");
+  elementos.button[8] = gtk_button_new_with_label("");*/
 
   gtk_box_pack_start(GTK_BOX(box1), elementos.button[0], FALSE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(box1), elementos.button[1], FALSE, TRUE, 0);
@@ -504,9 +508,6 @@ void checar(struct Elementos *elementos)
       /* Si el jugador 1 ganó */
       if (elementos->count % 2 == 0)
       {
-        for(i=0;i<9;i++)
-          g_print("%d\n", elementos->lugares[i]);
-
         dialog = gtk_dialog_new_with_buttons ("Gato", GTK_WINDOW(elementos->window), GTK_DIALOG_DESTROY_WITH_PARENT, "Salir", GTK_RESPONSE_NONE, NULL);
 
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
@@ -520,9 +521,6 @@ void checar(struct Elementos *elementos)
       /* Si el jugador 2 ganó */
       else
       {
-        for(i=0;i<9;i++)
-          g_print("%d\n", elementos->lugares[i]);
-
         dialog = gtk_dialog_new_with_buttons ("Gato", GTK_WINDOW(elementos->window), GTK_DIALOG_DESTROY_WITH_PARENT, "Salir", GTK_RESPONSE_NONE, NULL);
 
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
@@ -534,7 +532,7 @@ void checar(struct Elementos *elementos)
         gtk_widget_show_all (dialog);
       }   
     }
-    /* Condicion empate */
+    /* Si empatan */
     else if( elementos->count > 8 )
     {
       dialog = gtk_dialog_new_with_buttons ("Gato", GTK_WINDOW(elementos->window), GTK_DIALOG_DESTROY_WITH_PARENT, "Salir", GTK_RESPONSE_NONE, NULL);
