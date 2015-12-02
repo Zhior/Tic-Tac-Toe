@@ -31,13 +31,14 @@ gint main ( gint argc, gchar *argv[])
 
   struct Elementos elementos;
   elementos.count = 1;
+  int i;
 
   /* Widgets */
 
   /* Boxes */
   GtkWidget *verticalbox;
   GtkWidget *box1, *box2, *box3, *box4;
-  GtkWidget *button10, *button11, *button12;
+  GtkWidget *button1, *button2, *button3;
   
   /* Color */
   GdkColor color;
@@ -63,60 +64,39 @@ gint main ( gint argc, gchar *argv[])
   box4 = gtk_hbox_new(TRUE,20);
 
   /* Buttons Initialization */
-  elementos.button[0] = gtk_button_new_with_label("");
-  elementos.button[1] = gtk_button_new_with_label("");
-  elementos.button[2] = gtk_button_new_with_label("");
-  elementos.button[3] = gtk_button_new_with_label("");
-  elementos.button[4] = gtk_button_new_with_label("");
-  elementos.button[5] = gtk_button_new_with_label("");
-  elementos.button[6] = gtk_button_new_with_label("");
-  elementos.button[7] = gtk_button_new_with_label("");
-  elementos.button[8] = gtk_button_new_with_label("");
+  
+  /* Tablero de Gato */
+  for( i=0; i<9; i++ )
+    elementos.button[i] = gtk_button_new_with_label("");
 
-  gtk_box_pack_start(GTK_BOX(box1), elementos.button[0], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), elementos.button[1], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), elementos.button[2], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box2), elementos.button[3], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box2), elementos.button[4], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box2), elementos.button[5], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box3), elementos.button[6], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box3), elementos.button[7], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box3), elementos.button[8], FALSE, TRUE, 0);
+  for( i=0; i<3; i++ )
+    gtk_box_pack_start(GTK_BOX(box1), elementos.button[i], FALSE, TRUE, 0);
+  for( i=3; i<6; i++ )
+    gtk_box_pack_start(GTK_BOX(box2), elementos.button[i], FALSE, TRUE, 0);
+  for( i=6; i<9; i++ )
+    gtk_box_pack_start(GTK_BOX(box3), elementos.button[i], FALSE, TRUE, 0);
 
-  g_signal_connect(GTK_OBJECT(elementos.button[0]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), &elementos);
-  g_signal_connect(GTK_OBJECT(elementos.button[1]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), &elementos);
-  g_signal_connect(GTK_OBJECT(elementos.button[2]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), &elementos);
-  g_signal_connect(GTK_OBJECT(elementos.button[3]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), &elementos);
-  g_signal_connect(GTK_OBJECT(elementos.button[4]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), &elementos);
-  g_signal_connect(GTK_OBJECT(elementos.button[5]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), &elementos);
-  g_signal_connect(GTK_OBJECT(elementos.button[6]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), &elementos);
-  g_signal_connect(GTK_OBJECT(elementos.button[7]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), &elementos);
-  g_signal_connect(GTK_OBJECT(elementos.button[8]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), &elementos);
+  for( i=0; i<9; i++ )
+    g_signal_connect(GTK_OBJECT(elementos.button[9]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), &elementos);
 
-  gtk_widget_show(elementos.button[0]);
-  gtk_widget_show(elementos.button[1]);
-  gtk_widget_show(elementos.button[2]);
-  gtk_widget_show(elementos.button[3]);
-  gtk_widget_show(elementos.button[4]);
-  gtk_widget_show(elementos.button[5]);
-  gtk_widget_show(elementos.button[6]);
-  gtk_widget_show(elementos.button[7]);
-  gtk_widget_show(elementos.button[8]);
+  for( i=0; i<9; i++ )
+    gtk_widget_show(elementos.button[i]);
  
-  button10 = gtk_button_new_with_label("Nuevo");
-  gtk_box_pack_start(GTK_BOX(box4), button10, FALSE, TRUE, 0);
-  g_signal_connect(GTK_OBJECT(button10), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), NULL);
-  gtk_widget_show(button10);
+  /* Function Buttons */
+  button1 = gtk_button_new_with_label("Nuevo");
+  gtk_box_pack_start(GTK_BOX(box4), button1, FALSE, TRUE, 0);
+  g_signal_connect(GTK_OBJECT(button1), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), NULL);
+  gtk_widget_show(button1);
 
-  button11 = gtk_button_new_with_label("Guardar");
-  gtk_box_pack_start(GTK_BOX(box4), button11, FALSE, TRUE, 0);
-  g_signal_connect(GTK_OBJECT(button11), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), NULL);
-  gtk_widget_show(button11);
+  button2 = gtk_button_new_with_label("Guardar");
+  gtk_box_pack_start(GTK_BOX(box4), button2, FALSE, TRUE, 0);
+  g_signal_connect(GTK_OBJECT(button2), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), NULL);
+  gtk_widget_show(button2);
 
-  button12 = gtk_button_new_with_label("Cargar");
-  gtk_box_pack_start(GTK_BOX(box4), button12, FALSE, TRUE, 0);
-  g_signal_connect(GTK_OBJECT(button12), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), NULL);
-  gtk_widget_show(button12);
+  button3 = gtk_button_new_with_label("Cargar");
+  gtk_box_pack_start(GTK_BOX(box4), button3, FALSE, TRUE, 0);
+  g_signal_connect(GTK_OBJECT(button3), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), NULL);
+  gtk_widget_show(button3);
   
   /* Packing */
   gtk_box_pack_start(GTK_BOX(verticalbox), box4, TRUE, TRUE, 10);
@@ -137,18 +117,12 @@ gint main ( gint argc, gchar *argv[])
 
 }
 
-/* Add Button Function */
-GtkWidget *AddButton(GtkWidget *theBox, GtkWidget *EntryBox)
-{
-    GtkWidget *button;
-    button = gtk_button_new_with_label("");
-    gtk_box_pack_start(GTK_BOX(theBox), button, FALSE, TRUE, 0);
-    g_signal_connect(GTK_OBJECT(button), "clicked", GTK_SIGNAL_FUNC(ButtonClicked), NULL);
-    return button;
-}
-
-
-/* Click Button Function */
+/**
+*  Esta función se llama cuando se pica una de los nueve botones del tablero del juego.
+*  Dentro de esta función también se llama la función que verifica el ganador.
+*  @param *button	El botón que presionó el usuario
+*  @param *data		La estructura que contiene todos los botones y la ventana
+**/
 void ButtonClicked(GtkButton *button, gpointer *data)
 {
   struct Elementos *elementos = (struct Elementos *) data;
@@ -168,69 +142,91 @@ void ButtonClicked(GtkButton *button, gpointer *data)
       gtk_window_set_title(GTK_WINDOW(elementos->window), "Turno: Jugador 1");
     }
 
-    
     elementos->count++;
   }
 }
 
+/**
+*  Función que verifica el ganador del juego.
+*  @param *elementos	La estructura que contiene todos los botones y la ventana
+**/
 void checar(struct Elementos *elementos)
 {
   GtkWidget *dialog, *label, *content_area;
 
+  /* if() feo que comprueba si hay hay un ganador */
   if (
-    ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[1]))) == 0) && 
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[2]))) == 0) &&
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[1])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), "") != 0))
+     ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[1]))) == 0) && 
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[2]))) == 0) &&
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[1])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), "") != 0))
 
-    ||
+     ||
 
-    ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[3])), gtk_button_get_label(GTK_BUTTON(elementos->button[4]))) == 0) && 
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[3])), gtk_button_get_label(GTK_BUTTON(elementos->button[5]))) == 0) &&
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[3])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[4])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[5])), "") != 0))
+     ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[3])), gtk_button_get_label(GTK_BUTTON(elementos->button[4]))) == 0) && 
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[3])), gtk_button_get_label(GTK_BUTTON(elementos->button[5]))) == 0) &&
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[3])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[4])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[5])), "") != 0))
 
-    ||
+     ||
 
-    ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[6])), gtk_button_get_label(GTK_BUTTON(elementos->button[7]))) == 0) && 
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[6])), gtk_button_get_label(GTK_BUTTON(elementos->button[8]))) == 0) &&
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[6])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[7])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[8])), "") != 0))
+     ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[6])), gtk_button_get_label(GTK_BUTTON(elementos->button[7]))) == 0) && 
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[6])), gtk_button_get_label(GTK_BUTTON(elementos->button[8]))) == 0) &&
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[6])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[7])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[8])), "") != 0))
 
-    ||
+     ||
 
-    ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[3]))) == 0) && 
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[6]))) == 0) &&
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[3])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[6])), "") != 0))
+     ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[3]))) == 0) && 
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[6]))) == 0) &&
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[3])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[6])), "") != 0))
 
-    ||
+     ||
 
-    ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[1])), gtk_button_get_label(GTK_BUTTON(elementos->button[4]))) == 0) && 
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[1])), gtk_button_get_label(GTK_BUTTON(elementos->button[7]))) == 0) &&
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[1])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[4])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[7])), "") != 0))
+     ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[1])), gtk_button_get_label(GTK_BUTTON(elementos->button[4]))) == 0) && 
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[1])), gtk_button_get_label(GTK_BUTTON(elementos->button[7]))) == 0) &&
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[1])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[4])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[7])), "") != 0))
 
-    ||
+     ||
 
-    ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), gtk_button_get_label(GTK_BUTTON(elementos->button[5]))) == 0) && 
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), gtk_button_get_label(GTK_BUTTON(elementos->button[8]))) == 0) &&
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[5])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[8])), "") != 0))
+     ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), gtk_button_get_label(GTK_BUTTON(elementos->button[5]))) == 0) && 
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), gtk_button_get_label(GTK_BUTTON(elementos->button[8]))) == 0) &&
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[5])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[8])), "") != 0))
 
-    ||
+     ||
 
-    ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[4]))) == 0) && 
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[8]))) == 0) &&
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[4])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[8])), "") != 0))
-    ||
+     ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[4]))) == 0) && 
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), gtk_button_get_label(GTK_BUTTON(elementos->button[8]))) == 0) &&
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[0])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[4])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[8])), "") != 0))
+	 
+     ||
 
-    ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), gtk_button_get_label(GTK_BUTTON(elementos->button[4]))) == 0) && 
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), gtk_button_get_label(GTK_BUTTON(elementos->button[6]))) == 0) &&
-    (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[4])), "") != 0) && (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[6])), "") != 0))
+     ((strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), gtk_button_get_label(GTK_BUTTON(elementos->button[4]))) == 0) && 
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), gtk_button_get_label(GTK_BUTTON(elementos->button[6]))) == 0) &&
+      (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[2])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[4])), "") != 0) && 
+	  (strcmp(gtk_button_get_label(GTK_BUTTON(elementos->button[6])), "") != 0))
     )
     {
+	  /* Si el judaor 1 ganó */
       if (elementos->count % 2 != 0)
       {
         dialog = gtk_dialog_new_with_buttons ("Gato", GTK_WINDOW(elementos->window), GTK_DIALOG_DESTROY_WITH_PARENT, "Salir", GTK_RESPONSE_NONE,
                                               NULL);
 
          content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-         label = gtk_label_new ("Ganador: jugador 2!");
+         label = gtk_label_new ("Jugador 2 ganó!");
   
          g_signal_connect_swapped (dialog,
                                    "response",
@@ -240,13 +236,13 @@ void checar(struct Elementos *elementos)
          gtk_container_add (GTK_CONTAINER (content_area), label);
          gtk_widget_show_all (dialog);
        }
+	   /* Si el judaor 2 ganó */
        else
        {
-          dialog = gtk_dialog_new_with_buttons ("Gato", GTK_WINDOW(elementos->window), GTK_DIALOG_DESTROY_WITH_PARENT, "Salir", GTK_RESPONSE_NONE,
-                                                NULL);
+          dialog = gtk_dialog_new_with_buttons ("Gato", GTK_WINDOW(elementos->window), GTK_DIALOG_DESTROY_WITH_PARENT, "Salir", GTK_RESPONSE_NONE, NULL);
 
            content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-           label = gtk_label_new ("Ganador: jugador 1!");
+           label = gtk_label_new ("Jugador 1 ganó!");
    
            g_signal_connect_swapped (dialog,
                                      "response",
@@ -256,11 +252,14 @@ void checar(struct Elementos *elementos)
            gtk_container_add (GTK_CONTAINER (content_area), label);
            gtk_widget_show_all (dialog);
        }
+	   
     }
 
 }
 
-/* StopTheApp */
+/**
+*  Función para desturi el programa
+**/
 void StopTheApp(GtkWidget *window, gpointer data)
 {
     gtk_main_quit();
