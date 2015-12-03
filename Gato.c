@@ -1,12 +1,11 @@
-/*  
-*   @file   Gato.c
-*   @brief  Programa con interfaz grafica para juagr gato.
-*           Permite guardar una partida y reiniciarla en cualquier momento.
-*   @author Karla Juárez
-*           Lucas Comamala
-*
-*   @date   28/11/2015
-*/
+/*------------------------------------------------------------------------
+//@file    Gato.c
+//@brief   Programa con interfaz grafica para juagr gato.
+//         Permite guardar una partida y reiniciarla en cualquier momento.
+//@authors Karla Juárez
+//         Lucas Comamala
+//@date    28/11/2015
+-------------------------------------------------------------------------*/
 
 #include <gtk/gtk.h>
 #include <string.h>
@@ -73,9 +72,9 @@ gint main ( gint argc, gchar *argv[])
   /* Window Initialization */
   elementos.window = gtk_window_new( GTK_WINDOW_TOPLEVEL );
   gtk_window_set_position( GTK_WINDOW(elementos.window), GTK_WIN_POS_CENTER );
-  gtk_window_set_default_size( GTK_WINDOW(elementos.window), 300, 350 );
+  gtk_window_set_default_size( GTK_WINDOW(elementos.window), 350, 400 );
   gtk_window_set_title( GTK_WINDOW(elementos.window), "Gato" );
-  gtk_container_border_width( GTK_CONTAINER(elementos.window), 0 );
+  gtk_container_border_width( GTK_CONTAINER(elementos.window), 5 );
   gtk_widget_modify_bg( elementos.window, GTK_STATE_NORMAL, &color );
 
   GtkSettings *default_settings = gtk_settings_get_default();
@@ -90,7 +89,7 @@ gint main ( gint argc, gchar *argv[])
   box4 = gtk_hbox_new( TRUE,20 );
 
   /* Imagenes */
-  imgNuevo = gtk_image_new_from_file( "images/x.png" );
+  imgNuevo = gtk_image_new_from_file( "images/new.png" );
   imgGuardar = gtk_image_new_from_file( "images/save.png" );
   imgCargar = gtk_image_new_from_file( "images/open.png" );
 
@@ -135,12 +134,12 @@ gint main ( gint argc, gchar *argv[])
   button3 = gtk_button_new_with_label( "Cargar" );
   gtk_button_set_image( GTK_BUTTON(button3), imgCargar );
   gtk_box_pack_start( GTK_BOX(box4), button3, FALSE, TRUE, 0 );
-  g_signal_connect( GTK_OBJECT(button3), "clicked", GTK_SIGNAL_FUNC(ButtonClicked1), &elementos );
+  g_signal_connect( GTK_OBJECT(button3), "clicked", GTK_SIGNAL_FUNC(loadGame), &elementos );
   gtk_widget_show( button3 );
 
 
   /* Packing */
-  gtk_box_pack_start( GTK_BOX(verticalbox), box4, TRUE, TRUE, 10 );
+  gtk_box_pack_start( GTK_BOX(verticalbox), box4, FALSE, FALSE, 10 );
   gtk_box_pack_start( GTK_BOX(verticalbox), box1, TRUE, TRUE, 0 );
   gtk_box_pack_start( GTK_BOX(verticalbox), box2, TRUE, TRUE, 0 );
   gtk_box_pack_start( GTK_BOX(verticalbox), box3, TRUE, TRUE, 0 );
@@ -154,12 +153,14 @@ gint main ( gint argc, gchar *argv[])
 
 }
 
-/**
-*  9 funciones que se llaman se pica uno de los nueve botones del tablero del juego.
-*  Dentro de esta función también se llama la función que verifica el ganador.
-*  @param *button	El botón que presionó el usuario
-*  @param *data		La estructura que contiene todos los botones y la ventana
-**/
+
+
+/*-------------------------------------------------------------------------------------
+//9 funciones que se llaman se presiona uno de los nueve botones del tablero del juego.
+//Dentro de esta función también se llama la función que verifica el ganador.
+//@param *button	El botón que presionó el usuario.
+//@param *data		La estructura que contiene todos los botones y la ventana.
+--------------------------------------------------------------------------------------*/
 void ButtonClicked1 ( GtkButton *button, gpointer *data )
 {
 
@@ -403,12 +404,14 @@ void ButtonClicked9 ( GtkButton *button, gpointer *data )
 
 }
 
-/**
-*  Función para reiniciar el juego.
-*  Se llama con el botón de la pantalla principal.
-*  @param *button	El botón que presionó el usuario (nuevo).
-*  @param *data		La estructura que contiene todos los botones y la ventana.
-**/
+
+
+/*--------------------------------------------------------------------------------
+//Función para reiniciar el juego.
+//Se llama con el botón de la pantalla principal.
+//@param *button	El botón que presionó el usuario (nuevo).
+//@param *data		La estructura que contiene todos los botones y la ventana.
+---------------------------------------------------------------------------------*/
 void newGame(GtkButton *button, gpointer *data)
 {
 
@@ -423,7 +426,7 @@ void newGame(GtkButton *button, gpointer *data)
   for( i=0; i<9; i++ )
     elementos->lugares[i] = 0;
 
-  gtk_window_set_title(GTK_WINDOW(elementos->window), "Turno: Jugador 1");
+  gtk_window_set_title(GTK_WINDOW(elementos->window), "Gato");
 
   elementos->count = 0;
 
@@ -431,12 +434,13 @@ void newGame(GtkButton *button, gpointer *data)
 
 }
 
-/**
-*  Función para reiniciar el juego con diferentes argumentos.
-*  Se llama desde el dialogo cuando se termina un juego.
-*  @param *button	El botón que presionó el usuario (nuevo).
-*  @param *data		La estructura que contiene todos los botones y la ventana.
-**/
+
+
+/*--------------------------------------------------------------------------------
+//Función para reiniciar el juego con diferentes argumentos.
+//Se llama desde el dialogo cuando se termina un juego.
+//@param *elementos	La estructura que contiene todos los botones y la ventana.
+---------------------------------------------------------------------------------*/
 void newGame2(struct Elementos *elementos)
 {
 
@@ -450,7 +454,7 @@ void newGame2(struct Elementos *elementos)
   for( i=0; i<9; i++ )
     elementos->lugares[i] = 0;
 
-  gtk_window_set_title(GTK_WINDOW(elementos->window), "Turno: Jugador 1");
+  gtk_window_set_title(GTK_WINDOW(elementos->window), "Gato");
 
   elementos->count = 0;
 
@@ -458,11 +462,13 @@ void newGame2(struct Elementos *elementos)
 
 }
 
-/**
-*  Función que guarda el juego actual.
-*  @param *button	El botón que presionó el usuario (guardar).
-*  @param *data		La estructura que contiene todos los botones y la ventana.
-**/
+
+
+/*--------------------------------------------------------------------------------
+//Función que guarda el juego actual.
+//@param *button	El botón que presionó el usuario (guardar).
+//@param *data		La estructura que contiene todos los botones y la ventana.
+---------------------------------------------------------------------------------*/
 void saveGame(GtkButton *button, gpointer *data)
 {
 
@@ -487,6 +493,7 @@ void saveGame(GtkButton *button, gpointer *data)
     if ( nombre[i]  == '/' )
       nombre[i] = '-';
 
+  strcat(nombre, ".glk"); //GatoLucasKarla (glk)
   archivo = fopen(nombre, "wt");
 
   /* Sin memoria error */
@@ -505,8 +512,8 @@ void saveGame(GtkButton *button, gpointer *data)
 
   /* DEBUG 
      DELETE ME!!!!!! */
-  for(i=0;i<9;i++)
-    g_print("%i\n", elementos->lugares[i]);
+  /*for(i=0;i<9;i++)
+    g_print("%i\n", elementos->lugares[i]);*/
 
 
   fclose(archivo);
@@ -514,6 +521,110 @@ void saveGame(GtkButton *button, gpointer *data)
   printToLog("Archivo guardado exitosamente con el nombre: ");
   printToLog(nombre);
   printToLog("\n");
+
+}
+
+
+
+/*--------------------------------------------------------------------------------
+//Función que carga un juego.
+//@param *button	El botón que presionó el usuario (cargar).
+//@param *data		La estructura que contiene todos los botones y la ventana.
+---------------------------------------------------------------------------------*/
+void loadGame(GtkButton *button, gpointer *data)
+{
+
+  struct Elementos *elementos = (struct Elementos *) data;
+
+  int i;
+  char *nombre;
+  FILE *archivo;
+  GtkWidget *chooser;
+  GtkFileFilter *filter;
+
+  printToLog("Intentando cargar un juego...\n");
+
+  /* Crea el filtro de archivos .glk */
+  filter = gtk_file_filter_new();
+  gtk_file_filter_add_pattern (filter, "*.glk");
+  gtk_file_filter_set_name (filter, ".glk");
+
+  
+  /* Reinicia el juego actual 
+     Practicamente igual que la función newGame() */
+  //---------------------------
+  for( i=0; i<9; i++ )
+    gtk_button_set_label(GTK_BUTTON(elementos->button[i]), "");
+
+  for( i=0; i<9; i++ )
+    elementos->lugares[i] = 0;
+
+  gtk_window_set_title( GTK_WINDOW(elementos->window), "Gato" );
+  elementos->count = 0;
+
+  printToLog("Juego reiniciado.\n");
+  //---------------------------
+
+
+  /* Dialogo que permite la selección de un archivo */
+  //---------------------------
+  chooser = gtk_file_chooser_dialog_new( "Open File", GTK_WINDOW(elementos->window), GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT, NULL );
+  gtk_file_chooser_add_filter( GTK_FILE_CHOOSER(chooser), filter );
+
+  if( gtk_dialog_run(GTK_DIALOG(chooser)) == GTK_RESPONSE_ACCEPT )
+  {
+    nombre = gtk_file_chooser_get_filename( GTK_FILE_CHOOSER (chooser) );
+    printToLog("Intentando leer archivo:\n");
+    g_print( "%s\n", nombre );
+  }
+
+  gtk_widget_destroy (chooser);
+  //---------------------------
+
+  archivo = fopen(nombre, "rt");
+
+  /* Archivo no existe error. 
+     Solo como contingencia. 
+     Este if() nunca debe ser true. */
+  if ( archivo == NULL )
+  {
+    printToLog("Archivo no existente.\n");
+    exit(1);
+  }
+	
+  /* Carga los movimientos que se encuentran en el archivo */
+  for ( i=0; i<9; i++ )
+  {
+    fscanf(archivo, "%i\n", &elementos->lugares[i]); // Lee del archivo
+
+    if( elementos->lugares[i] == 0 )
+      break;
+    else
+    {
+      g_print("%i\n", elementos->lugares[i]);
+
+      if (elementos->count % 2 == 0)
+      {
+        gtk_button_set_label(GTK_BUTTON(elementos->button[i]), "X");
+        gtk_window_set_title( GTK_WINDOW(elementos->window), "Turno: Jugador 2" );
+      }
+      else
+      {
+        gtk_button_set_label(GTK_BUTTON(elementos->button[i]), "O");
+        gtk_window_set_title( GTK_WINDOW(elementos->window), "Turno: Jugador 1" );
+      }
+
+      elementos->count++;
+    }
+  }
+
+  for ( i=0; i<9; i++ )
+    g_print("%i\n", elementos->lugares[i]);
+
+  fclose(archivo);
+  g_free(nombre);
+
+  printToLog("Archivo cargado exitosamente.");
 
 }
 
@@ -530,7 +641,6 @@ void checar ( struct Elementos *elementos )
 
   // Ventana
   dialog = gtk_dialog_new ();
-  gtk_window_set_title( GTK_WINDOW(dialog), "Gato" );
   gtk_container_border_width( GTK_CONTAINER(dialog), 5 );
   gtk_window_set_default_size( GTK_WINDOW(dialog), 150, 90 );
 
@@ -612,6 +722,7 @@ void checar ( struct Elementos *elementos )
       {
         printToLog( "Ganador: Jugador 1.\n" );
         gtk_window_set_title( GTK_WINDOW(elementos->window), "Ganador: Jugador 1!" );
+        gtk_window_set_title( GTK_WINDOW(dialog), "Ganador!!!" );
         label = gtk_label_new( "Jugador 1 ganó!" );
 
         //g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);
@@ -622,7 +733,7 @@ void checar ( struct Elementos *elementos )
         result = gtk_dialog_run ( GTK_DIALOG (dialog) );
         switch (result)
         {
-          case 1:
+          case 1: //Nuevo juego
             newGame2(elementos);
             break;
           default:
@@ -639,6 +750,7 @@ void checar ( struct Elementos *elementos )
 
         printToLog( "Ganador: Jugador 2.\n" );
         gtk_window_set_title( GTK_WINDOW(elementos->window), "Ganador: Jugador 2!" );
+        gtk_window_set_title( GTK_WINDOW(dialog), "Ganador!!!" );
         label = gtk_label_new( "Jugador 2 ganó!" );
 
         gtk_container_add(GTK_CONTAINER (content_area), label);
@@ -647,7 +759,7 @@ void checar ( struct Elementos *elementos )
         result = gtk_dialog_run( GTK_DIALOG (dialog) );
         switch (result)
         {
-          case 1:
+          case 1: //Nuevo juego
             newGame2(elementos);
             break;
           default:
@@ -666,6 +778,7 @@ void checar ( struct Elementos *elementos )
     {
       printToLog("Juego empatado.\n");
       gtk_window_set_title(GTK_WINDOW(elementos->window), "GATO!!!");
+      gtk_window_set_title( GTK_WINDOW(dialog), "GATO!!!" );
       label = gtk_label_new ("Empate!");
 
       gtk_container_add(GTK_CONTAINER (content_area), label);
@@ -674,7 +787,7 @@ void checar ( struct Elementos *elementos )
       result = gtk_dialog_run( GTK_DIALOG (dialog) );
       switch (result)
       {
-        case 1:
+        case 1: //Nuevo juego
           newGame2(elementos);
           break;
         default:
@@ -684,11 +797,13 @@ void checar ( struct Elementos *elementos )
       }
       gtk_widget_destroy (dialog);
     } //End else if
-}
+
+} //END funcion checar
+
 
 /**
-*  Función que imprime a la consola para hacer pruebas o debug
-*  @param	entry lo que se piensa imprimir
+*  Función que imprime a la consola para hacer pruebas o debug.
+*  @param	entry lo que se piensa imprimir.
 */
 void printToLog(char *entry)
 {
@@ -697,7 +812,7 @@ void printToLog(char *entry)
 
 
 /**
-*  Función para destuir el programa
+*  Función para destuir el programa.
 **/
 void StopTheApp(GtkWidget *window, gpointer data)
 {
