@@ -40,6 +40,9 @@ void loadGame ( GtkButton *button, gpointer *data );
 
 void StopTheApp ( GtkWidget *window, gpointer data );
 
+//void fill(gpointer *data, int i);
+//gint pausa (gpointer data);
+
 void printToLog ( char *entry );
 
 /* Main Function */
@@ -490,7 +493,7 @@ void saveGame(GtkButton *button, gpointer *data)
   strftime(nombre, 80, "%x_%H:%M", infom);
   
   for ( i=0; i<22; i++ )
-    if ( nombre[i]  == '/' )
+    if ( nombre[i]  == '/'  || nombre[i]  == ':' )
       nombre[i] = '-';
 
   strcat(nombre, ".glk"); //GatoLucasKarla (glk)
@@ -539,9 +542,10 @@ void loadGame(GtkButton *button, gpointer *data)
   int i;
   char *nombre;
   FILE *archivo;
+  //int timeOut;
   GtkWidget *chooser;
   GtkFileFilter *filter;
-
+  
   printToLog("Intentando cargar un juego...\n");
 
   /* Crea el filtro de archivos .glk */
@@ -603,6 +607,8 @@ void loadGame(GtkButton *button, gpointer *data)
     {
       g_print("%i\n", elementos->lugares[i]);
 
+      //timeOut = g_timeout_add( 200, GSourceFunc(fill), elementos, i );
+
       if (elementos->count % 2 == 0)
       {
         gtk_button_set_label(GTK_BUTTON(elementos->button[i]), "X");
@@ -628,10 +634,37 @@ void loadGame(GtkButton *button, gpointer *data)
 
 }
 
-/**
-*  Función que verifica el ganador del juego.
-*  @param *elementos	La estructura que contiene todos los botones y la ventana.
-**/
+
+
+/*--------------------------------------------------------------------------------
+//Función que llena el tablero cuando se esta cargando el juego.
+//@param *button	El botón que presionó el usuario (cargar).
+//@param *data		La estructura que contiene todos los botones y la ventana.
+---------------------------------------------------------------------------------*/
+/*gint fill(gpointer *data, int i)
+{
+
+  struct Elementos *elementos = (struct Elementos *) data;
+
+      if (elementos->count % 2 == 0)
+      {
+        gtk_button_set_label(GTK_BUTTON(elementos->button[i]), "X");
+        gtk_window_set_title( GTK_WINDOW(elementos->window), "Turno: Jugador 2" );
+      }
+      else
+      {
+        gtk_button_set_label(GTK_BUTTON(elementos->button[i]), "O");
+        gtk_window_set_title( GTK_WINDOW(elementos->window), "Turno: Jugador 1" );
+      }
+
+}*/
+
+
+
+/*--------------------------------------------------------------------------------
+//Función que verifica el ganador del juego.
+//@param *elementos	La estructura que contiene todos los botones y la ventana.
+---------------------------------------------------------------------------------*/
 void checar ( struct Elementos *elementos )
 {
 
@@ -801,21 +834,36 @@ void checar ( struct Elementos *elementos )
 } //END funcion checar
 
 
-/**
-*  Función que imprime a la consola para hacer pruebas o debug.
-*  @param	entry lo que se piensa imprimir.
-*/
-void printToLog(char *entry)
+
+/*----------------------------------------------
+//Función que verifica el ganador del juego.
+//@param	entry lo que se piensa imprimir.
+-----------------------------------------------*/
+void printToLog ( char *entry )
 {
   g_print("%s", entry);
 }
 
 
-/**
-*  Función para destuir el programa.
-**/
-void StopTheApp(GtkWidget *window, gpointer data)
+
+/*-------------------------------
+//Función para insertaruna pausa.
+--------------------------------*/
+/*gint pausa (gpointer data)
+{
+  gtk_main_quit();
+}*/
+
+
+
+/*----------------------------------
+//Función para destruir el programa.
+-----------------------------------*/
+void StopTheApp ( GtkWidget *window, gpointer data )
 {
   printToLog("Terminando programa...\n");
   gtk_main_quit();
 }
+
+
+
