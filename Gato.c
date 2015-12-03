@@ -12,7 +12,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-struct Elementos{
+struct Elementos
+{
   GtkWidget *window;
   GtkWidget *button[9];
   int count;
@@ -20,31 +21,34 @@ struct Elementos{
 }elementos;
 
 /* Prototypes */
-void ButtonClicked0(GtkButton *button, gpointer *data);
-void ButtonClicked1(GtkButton *button, gpointer *data);
-void ButtonClicked2(GtkButton *button, gpointer *data);
-void ButtonClicked3(GtkButton *button, gpointer *data);
-void ButtonClicked4(GtkButton *button, gpointer *data);
-void ButtonClicked5(GtkButton *button, gpointer *data);
-void ButtonClicked6(GtkButton *button, gpointer *data);
-void ButtonClicked7(GtkButton *button, gpointer *data);
-void ButtonClicked8(GtkButton *button, gpointer *data);
+void ButtonClicked0 ( GtkButton *button, gpointer *data );
+void ButtonClicked1 ( GtkButton *button, gpointer *data );
+void ButtonClicked2 ( GtkButton *button, gpointer *data );
+void ButtonClicked3 ( GtkButton *button, gpointer *data );
+void ButtonClicked4 ( GtkButton *button, gpointer *data );
+void ButtonClicked5 ( GtkButton *button, gpointer *data );
+void ButtonClicked6 ( GtkButton *button, gpointer *data );
+void ButtonClicked7 ( GtkButton *button, gpointer *data );
+void ButtonClicked8 ( GtkButton *button, gpointer *data );
 
-void checar(struct Elementos *elementos);
-void guardar(GtkButton *button, gpointer *data);
+void checar( struct Elementos *elementos );
+void guardar( GtkButton *button, gpointer *data );
 
-void StopTheApp(GtkWidget *window, gpointer data);
+void StopTheApp( GtkWidget *window, gpointer data );
+
+void printToLog ( char *entry );
 
 /* Main Function */
 gint main ( gint argc, gchar *argv[])
 {
 
+  /* Declaracion de varibles */
   struct Elementos elementos;
   elementos.count = 0;
   int i;
 
-  /* Widgets */
 
+  /* Widgets */
   /* Boxes */
   GtkWidget *verticalbox;
   GtkWidget *box1, *box2, *box3, *box4;
@@ -57,12 +61,8 @@ gint main ( gint argc, gchar *argv[])
   /* Imagenes */
   GtkWidget *imgNuevo, *imgGuardar, *imgCargar;
 
-  //------------------------------------------------------------------------------------------
-  
-  /* Initialization */
-
-  gtk_init(&argc, &argv);
-
+ 
+  /* Initialization */ gtk_init(&argc, &argv);
   /* Window Initialization */
   elementos.window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_position(GTK_WINDOW(elementos.window), GTK_WIN_POS_CENTER);
@@ -83,35 +83,21 @@ gint main ( gint argc, gchar *argv[])
   box4 = gtk_hbox_new(TRUE,20);
 
   /* Imagenes */
-  imgNuevo = gtk_image_new_from_file("new.png");
-  imgGuardar = gtk_image_new_from_file("save.png");
-  imgCargar = gtk_image_new_from_file("open.png");
+  imgNuevo = gtk_image_new_from_file("images/new.png");
+  imgGuardar = gtk_image_new_from_file("images/save.png");
+  imgCargar = gtk_image_new_from_file("images/open.png");
 
   /* Buttons Initialization */
-
   /* Tablero Gato */
   for ( i=0; i<9; i++ )
     elementos.button[i] = gtk_button_new_with_label("");
-  
-  /*elementos.button[0] = gtk_button_new_with_label("");
-  elementos.button[1] = gtk_button_new_with_label("");
-  elementos.button[2] = gtk_button_new_with_label("");
-  elementos.button[3] = gtk_button_new_with_label("");
-  elementos.button[4] = gtk_button_new_with_label("");
-  elementos.button[5] = gtk_button_new_with_label("");
-  elementos.button[6] = gtk_button_new_with_label("");
-  elementos.button[7] = gtk_button_new_with_label("");
-  elementos.button[8] = gtk_button_new_with_label("");*/
 
-  gtk_box_pack_start(GTK_BOX(box1), elementos.button[0], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), elementos.button[1], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box1), elementos.button[2], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box2), elementos.button[3], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box2), elementos.button[4], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box2), elementos.button[5], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box3), elementos.button[6], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box3), elementos.button[7], FALSE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(box3), elementos.button[8], FALSE, TRUE, 0);
+  for ( i=0; i<3; i++ )
+    gtk_box_pack_start(GTK_BOX(box1), elementos.button[i], FALSE, TRUE, 0);
+  for ( i=3; i<6; i++ )
+    gtk_box_pack_start(GTK_BOX(box2), elementos.button[i], FALSE, TRUE, 0);
+  for ( i=6; i<9; i++ )
+    gtk_box_pack_start(GTK_BOX(box3), elementos.button[i], FALSE, TRUE, 0);
 
   g_signal_connect(GTK_OBJECT(elementos.button[0]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked0), &elementos);
   g_signal_connect(GTK_OBJECT(elementos.button[1]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked1), &elementos);
@@ -123,15 +109,16 @@ gint main ( gint argc, gchar *argv[])
   g_signal_connect(GTK_OBJECT(elementos.button[7]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked7), &elementos);
   g_signal_connect(GTK_OBJECT(elementos.button[8]), "clicked", GTK_SIGNAL_FUNC(ButtonClicked8), &elementos);
 
-  gtk_widget_show(elementos.button[0]);
-  gtk_widget_show(elementos.button[1]);
+  for ( i=0; i<9; i++ )
+  gtk_widget_show(elementos.button[i]);
+  /*gtk_widget_show(elementos.button[1]);
   gtk_widget_show(elementos.button[2]);
   gtk_widget_show(elementos.button[3]);
   gtk_widget_show(elementos.button[4]);
   gtk_widget_show(elementos.button[5]);
   gtk_widget_show(elementos.button[6]);
   gtk_widget_show(elementos.button[7]);
-  gtk_widget_show(elementos.button[8]);
+  gtk_widget_show(elementos.button[8]);*/
  
   /* Function Buttons */
   button1 = gtk_button_new_with_label("Nuevo");
@@ -179,25 +166,25 @@ gint main ( gint argc, gchar *argv[])
 *  @param *button	El botón que presionó el usuario
 *  @param *data		La estructura que contiene todos los botones y la ventana
 **/
-void ButtonClicked0(GtkButton *button, gpointer *data)
+void ButtonClicked0 ( GtkButton *button, gpointer *data )
 {
   struct Elementos *elementos = (struct Elementos *) data;
 
-  if (strcmp(gtk_button_get_label(button), "") == 0)
+  if( strcmp( gtk_button_get_label(button), "" ) == 0 )
   {
     elementos->lugares[elementos->count] = 1;
 
     if (elementos->count % 2 == 0)
     {
-      gtk_button_set_label(button, "X");
+      gtk_button_set_label( button, "X" );
       checar(elementos);
-      gtk_window_set_title(GTK_WINDOW(elementos->window), "Turno: Jugador 2");
+      gtk_window_set_title( GTK_WINDOW(elementos->window), "Turno: Jugador 2" );
     }
     else
     {
-      gtk_button_set_label(button, "O");
+      gtk_button_set_label( button, "O" );
       checar(elementos);
-      gtk_window_set_title(GTK_WINDOW(elementos->window), "Turno: Jugador 1");
+      gtk_window_set_title( GTK_WINDOW(elementos->window), "Turno: Jugador 1" );
     }
 
     elementos->count++;
@@ -421,39 +408,39 @@ void guardar(GtkButton *button, gpointer *data)
 
   FILE *archivo;
 
+  printToLog("Intentando guardar...\n");
+
   /* Utiliza la fecha y hor actual para crear el nombre del archivo */
   time(&rawtime);
   infom = localtime(&rawtime);
   strftime(nombre, 80, "%x_%H:%M", infom);
-
-  /* Debug Log */
-  g_print("Funcion Guardar\n");
   
   for ( i=0; i<22; i++ )
     if ( nombre[i]  == '/' )
       nombre[i] = '-';
 
-  /* Debug Log */
-  g_print("Funcion Guardar\n%s\n", nombre);
-
   archivo = fopen(nombre, "wt");
-
-  /* Debug Log */
-  g_print("Funcion Guardar2\n%s\n", nombre);
 
   /* Sin memoria error */
   if ( archivo == NULL )
+  {
+    printToLog("Falta de memoria.\n");
     exit(1);
-
+  }
+	
   /* Popula el archivo de texto con los movimientos en orden */
   for ( i=0; i<9; i++ )
-    if( elementos->lugares[i] == 0 )
+    if( elementos->lugares[i] == 0 || elementos->lugares[i] < 0 || elementos->lugares[i] > 9 )
       break;
     else
       fprintf(archivo, "%i\n", elementos->lugares[i]);
 
+
   fclose(archivo);
 
+  printToLog("Archivo guardado exitosamente con el nombre: ");
+  printToLog(nombre);
+  printToLog("\n");
 }
 
 /**
@@ -570,6 +557,15 @@ void checar(struct Elementos *elementos)
       gtk_widget_show_all (dialog);
     }
 }
+
+/**
+*  Función que imprime a la consola para hacer pruebas o debug
+*/
+void printToLog(char *entry)
+{
+  g_print("%s", entry);
+}
+
 
 /**
 *  Función para destuir el programa
