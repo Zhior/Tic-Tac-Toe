@@ -411,16 +411,41 @@ void ButtonClicked8(GtkButton *button, gpointer *data)
 **/
 void guardar(GtkButton *button, gpointer *data)
 {
+  struct Elementos *elementos = (struct Elementos *) data;
+  
+  int i;
+  char nombre[22];
+
+  time_t rawtime;
+  struct tm *infom;
 
   FILE *archivo;
-  struct Elementos *elementos = (struct Elementos *) data;
-  int i;
 
-  for (i=0;i<9;i++)
-    g_print("%i\n", elementos->lugares[i]);
+  /* Utiliza la fecha y hor actual para crear el nombre del archivo */
+  time(&rawtime);
+  infom = localtime(&rawtime);
+  strftime(nombre, 80, "%x_%H:%M", infom);
 
-  archivo = fopen("gatoGuardado", "wt");
+  /* Debug Log */
+  g_print("Funcion Guardar\n");
+  
+  for ( i=0; i<22; i++ )
+    if ( nombre[i]  == '/' )
+      nombre[i] = '-';
 
+  /* Debug Log */
+  g_print("Funcion Guardar\n%s\n", nombre);
+
+  archivo = fopen(nombre, "wt");
+
+  /* Debug Log */
+  g_print("Funcion Guardar2\n%s\n", nombre);
+
+  /* Sin memoria error */
+  if ( archivo == NULL )
+    exit(1);
+
+  /* Popula el archivo de texto con los movimientos en orden */
   for ( i=0; i<9; i++ )
     if( elementos->lugares[i] == 0 )
       break;
@@ -438,7 +463,6 @@ void guardar(GtkButton *button, gpointer *data)
 void checar(struct Elementos *elementos)
 {
   GtkWidget *dialog, *label, *content_area;
-  int i;
 
   /* if() que comprueba si hay hay un ganador */
   if (
@@ -533,7 +557,7 @@ void checar(struct Elementos *elementos)
       }   
     }
     /* Si empatan */
-    else if( elementos->count > 8 )
+    else if( elementos->count > 7 )
     {
       dialog = gtk_dialog_new_with_buttons ("Gato", GTK_WINDOW(elementos->window), GTK_DIALOG_DESTROY_WITH_PARENT, "Salir", GTK_RESPONSE_NONE, NULL);
 
